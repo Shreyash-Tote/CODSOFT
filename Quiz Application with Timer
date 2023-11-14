@@ -1,0 +1,51 @@
+import java.util.Scanner;
+import java.util.TimerTask;
+import java.util.Timer;
+
+class QuizApplication {
+    private static final int TIME_LIMIT_SECONDS = 60; 
+    static int score = 0;
+
+    public static void main(String[] args) {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                endQuiz();
+            }
+        }, TIME_LIMIT_SECONDS * 1000);
+
+        startQuiz();
+
+        timer.cancel();
+    }
+
+    private static void startQuiz() {
+        System.out.println("Welcome to the Quiz! You have " + TIME_LIMIT_SECONDS + " seconds to complete.");
+
+        askQuestion("What is the capital of India? ", "Delhi");
+        askQuestion("Which city of India is known as PINK city?", "Jaipur");
+        askQuestion("Which city of India is known as FILM city?", "Mumbai");
+        
+        System.out.println("Quiz completed. Your score: " + score);
+    }
+
+    private static void askQuestion(String question, String correctAnswer) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(question);
+        String userAnswer = scanner.nextLine();
+
+        if (userAnswer.equalsIgnoreCase(correctAnswer)) {
+            System.out.println("Correct!!");
+            score++;
+        } else {
+            System.out.println("Incorrect!!. The correct answer is: " + correctAnswer);
+        }
+    }
+
+    private static void endQuiz() {
+        System.out.println("Time's up! Quiz ended.");
+        System.out.println("Your final score: " + score);
+        System.exit(0);
+    }
+}
